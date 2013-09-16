@@ -769,6 +769,24 @@ int git_remote_download(git_remote *remote)
 	return git_fetch_download_pack(remote);
 }
 
+int git_remote_fetch(git_remote *remote)
+{
+	int error;
+
+	/* Connect and download everything */
+	if ((error = git_remote_connect(remote, GIT_DIRECTION_FETCH)) < 0)
+		return error;
+
+	if ((error = git_remote_download(remote)) < 0)
+		return error;
+
+	/* Create "remote/foo" branches for all remote branches */
+	if ((error = git_remote_update_tips(remote)) < 0)
+		return error;
+
+	return 0;
+}
+
 static int remote_head_for_fetchspec_src(git_remote_head **out, git_vector *update_heads, const char *fetchspec_src)
 {
 	unsigned int i;
