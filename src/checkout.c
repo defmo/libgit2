@@ -1148,7 +1148,7 @@ static void checkout_data_clear(checkout_data *data)
 static int checkout_data_init(
 	checkout_data *data,
 	git_iterator *target,
-	git_checkout_opts *proposed)
+	const git_checkout_opts *proposed)
 {
 	int error = 0;
 	git_repository *repo = git_iterator_owner(target);
@@ -1258,7 +1258,7 @@ cleanup:
 
 int git_checkout_iterator(
 	git_iterator *target,
-	git_checkout_opts *opts)
+	const git_checkout_opts *opts)
 {
 	int error = 0;
 	git_iterator *baseline = NULL, *workdir = NULL;
@@ -1433,7 +1433,7 @@ int git_checkout_tree(
 
 int git_checkout_head(
 	git_repository *repo,
-	git_checkout_opts *opts)
+	const git_checkout_opts *opts)
 {
 	int error;
 	git_tree *head = NULL;
